@@ -6,7 +6,7 @@ picture {
   @apply grid grid-cols-12 gap-4;
 
   &--center {
-    @apply col-start-3 col-span-8;
+    @apply col-start-3 col-span-8 sm:mx-2 sm:col-span-12 md:mx-2 md:col-span-12;
   }
 }
 

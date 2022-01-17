@@ -27,7 +27,7 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        printWidth: 100,
+        printWidth: 140,
         tabWidth: 2,
         useTabs: false,
         semi: true,
@@ -70,12 +70,25 @@ module.exports = {
     'import/no-absolute-path': 'off',
     'import/order': 'off',
     'import/extensions': 'off',
+    'import/prefer-default-export': 'off',
     'linebreak-style': ['error', 'windows'],
+    'max-len': [
+      'error',
+      {
+        ignoreStrings: true,
+        ignoreUrls: true,
+        code: 140,
+      },
+    ],
   },
   settings: {
     'import/resolver': {
       alias: {
-        map: [['@', './src']],
+        map: [
+          ['@', './src'],
+          ['@c', './src/components/'],
+          ['@p', './src/pages/'],
+        ],
         extensions: ['.ts', '.js', '.json', '.vue'],
       },
     },

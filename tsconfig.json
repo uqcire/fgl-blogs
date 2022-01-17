@@ -16,5 +16,5 @@
     "allowJs": true,
     "checkJs": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "src/store/useUserStore.ts"]
 }
