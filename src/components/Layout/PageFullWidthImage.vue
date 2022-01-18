@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 'FullWidthImage';
 
-import { defineProps } from 'vue';
-
 const props = defineProps({
   imgUrl: { type: String, default: '' },
   imgAlt: { type: String, default: '' },

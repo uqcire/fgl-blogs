@@ -2,7 +2,6 @@
 'HomepageCard';
 
 import { NCard, NTag } from 'naive-ui';
-import { defineProps } from 'vue';
 
 const props = defineProps({
   tag: {
