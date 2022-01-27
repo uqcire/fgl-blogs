@@ -1,9 +1,29 @@
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
+import AutoImport from 'unplugin-auto-import/vite';
 import { defineConfig } from 'vite';
+import VueSetupExtend from 'vite-plugin-vue-setup-extend';
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    VueSetupExtend(),
+    AutoImport({
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
+        /\.md$/, // .md
+      ],
+      imports: ['vue', 'vue-router', 'pinia'],
+      eslintrc: {
+        enabled: false, // Default `false`
+        filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+        globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+      },
+      dts: 'src/auto-imports.d.ts',
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -27,7 +47,7 @@ export default defineConfig({
 
   // 本地运行配置，及反向代理配置
   server: {
-    host: 'localhost', // 指定服务器主机名
+    host: '0.0.0.0', // 指定服务器主机名
     port: 3000, // 指定服务器端口
     open: true, // 在服务器启动时自动在浏览器中打开应用程序
     strictPort: false, // 设为 false 时，若端口已被占用则会尝试下一个可用端口,而不是直接退出

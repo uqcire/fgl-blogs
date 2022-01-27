@@ -135,7 +135,7 @@ const footerLinks = reactive([
 
 <style scoped lang="scss">
 footer {
-  @apply mt-2 bg-fgl-primary sticky;
+  @apply bg-fgl-primary sticky;
 }
 
 .footer {

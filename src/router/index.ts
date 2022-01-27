@@ -18,6 +18,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { title: 'Home' },
   },
   {
+    path: '/create-post',
+    name: 'CreatePost',
+    component: () => import('@p/CreatePost.vue'),
+    meta: { title: 'Create Post' },
+  },
+  {
     path: '/signin',
     name: 'SignIn',
     component: () => import('@p/SignIn.vue'),
@@ -44,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { title: 'Register' },
   },
   {
-    path: '/users',
+    path: '/user/:id',
     name: 'UserProfile',
     component: () => import('@p/UserProfile.vue'),
     meta: { title: 'Profile' },

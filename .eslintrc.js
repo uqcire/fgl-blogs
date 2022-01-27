@@ -14,6 +14,8 @@ module.exports = {
     // eslint-config-prettier 的缩写
     'prettier',
     'airbnb-base',
+    './.eslintrc-auto-import.json',
+    'vue-global-api',
   ],
   parserOptions: {
     ecmaVersion: 2020,

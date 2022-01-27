@@ -1,7 +1,6 @@
 import { firebaseApp } from '@/firebase/firebaseinit';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { addDoc, collection, getDocs, getFirestore, query, serverTimestamp, where } from 'firebase/firestore';
-import { defineStore } from 'pinia';
+import { createUserWithEmailAndPassword, getAuth, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { addDoc, collection, doc, getDocs, getFirestore, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
 
 // FIREBASE AUTH INIT
 const auth = getAuth(firebaseApp);
@@ -82,6 +81,8 @@ export const useUserStore = defineStore({
   state: () => ({
     profileId: '',
     profileUID: '',
+    profileUDisplayName: '',
+    profileUPhotoURL: null,
     profileFirstName: null,
     profileLastName: null,
     profileUserName: null,
@@ -117,15 +118,42 @@ export const useUserStore = defineStore({
         const { uid, email } = user;
         const q = query(dbCollection, where('email', '==', email));
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          this.profileId = doc.id;
+
+        querySnapshot.forEach((document) => {
+          this.profileId = document.id;
           this.profileUID = uid;
-          this.profileFirstName = doc.data().firstName;
-          this.profileLastName = doc.data().lastName;
-          this.profileUserName = doc.data().userName;
-          this.profileEmail = doc.data().email;
+          this.profileFirstName = document.data().firstName;
+          this.profileLastName = document.data().lastName;
+          this.profileUserName = document.data().userName;
+          this.profileEmail = document.data().email;
+          const displayName = `${document.data().firstName} ${document.data().lastName}`;
+          this.profileUDisplayName = displayName;
+          this.profileUPhotoURL = document.data().photoURL;
         });
       }
+    },
+
+    async updateUser(firstName: string, lastName: string, userName: string, photoURL: string) {
+      const user = auth.currentUser;
+      if (user !== null) {
+        const { email } = user;
+        const q = await query(dbCollection, where('email', '==', email));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((document) => {
+          const docId: any = document.id;
+          const docRef = doc(db, 'users', docId);
+          updateDoc(docRef, {
+            firstName,
+            lastName,
+            userName,
+            photoURL,
+          });
+        });
+      }
+    },
+
+    async passwordResetEmail(email: string) {
+      await sendPasswordResetEmail(auth, email);
     },
 
     // setProfileInfo(this, res: any) {

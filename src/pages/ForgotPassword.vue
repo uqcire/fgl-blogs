@@ -2,16 +2,13 @@
 'ForgotPassword';
 
 import { getFirebaseErrorMessage } from '@/firebase/errorMessagesUtils';
-import { firebaseApp } from '@/firebase/firebaseinit';
+import { useUserStore } from '@/store/useUserStore';
 import { validateEmailFormat } from '@/utils/validationUtils';
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import { NButton, NForm, NFormItem, NInput } from 'naive-ui';
-import { reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-const auth = getAuth(firebaseApp);
+const userStore = useUserStore();
 
 const form = reactive({ user: { email: '' } });
 
@@ -28,7 +25,8 @@ const rules = reactive({
 });
 
 const resetPassword = () => {
-  sendPasswordResetEmail(auth, form.user.email)
+  userStore
+    .passwordResetEmail(form.user.email)
     .then(() => {
       router.push({ name: 'RecoveryEmailed' });
     })

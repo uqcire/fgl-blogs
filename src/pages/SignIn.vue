@@ -5,21 +5,19 @@ import { getFirebaseErrorMessage } from '@/firebase/errorMessagesUtils';
 import { useUserStore } from '@/store/useUserStore';
 import { validateEmailFormat } from '@/utils/validationUtils';
 import { NButton, NCard, NDivider, NForm, NFormItem, NInput } from 'naive-ui';
-import { reactive, ref, watchEffect } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 
 const userStore = useUserStore();
 const router = useRouter();
 const errorMsg = ref('');
 
 // ROUTER CHECK
-const signInRouteCheck: boolean | any = ref(null);
+const isVisible: boolean | any = ref(null);
 const route = useRoute();
 const routeCheck = () => {
   if (route.name === 'ForgotPassword' || route.name === 'RecoveryEmailed') {
-    signInRouteCheck.value = true;
+    isVisible.value = true;
   } else {
-    signInRouteCheck.value = false;
+    isVisible.value = false;
   }
 };
 watchEffect(() => routeCheck());
@@ -48,7 +46,6 @@ const rules = reactive({
 });
 
 // SIGN IN ACTION
-
 const signIn = (e: any) => {
   e.preventDefault();
   signInFormRef.value.validate(async () => {
@@ -81,7 +78,7 @@ const signIn = (e: any) => {
       <n-divider />
       <div class="auth-content">
         <div class="auth-content-inner">
-          <div v-if="!signInRouteCheck" class="sign-in">
+          <div v-if="!isVisible" class="sign-in">
             <h6 class="text-fgl-text-color-2">Sign in</h6>
 
             <!-- FORM -->

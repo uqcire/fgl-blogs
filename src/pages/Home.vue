@@ -6,7 +6,6 @@ import HomepageBanner from '@c/Layout/HomepageBanner.vue';
 import HomepageContentCard from '@c/Layout/HomepageContentCard.vue';
 import HomepageHeroCard from '@c/Layout/HomepageHeroCard.vue';
 import { NDivider, NTag } from 'naive-ui';
-import { reactive } from 'vue';
 
 const blogs = useSampleBlogsStore();
 
